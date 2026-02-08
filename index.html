@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kevin — Entre para a lista</title>
+  <meta name="description" content="Emails sobre o que ninguém te conta de construir um negócio que funciona de verdade.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+  <style>
+    /* ── Reset ──────────────────────────────────── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* ── Variables (Kevin's palette) ────────────── */
+    :root {
+      --primary: #28514D;
+      --bg: #E0DBC6;
+      --accent1: #968659;
+      --accent2: #BAA36C;
+      --card-bg: #ffffff;
+      --text-body: #28514D;
+    }
+
+    /* ── Base ───────────────────────────────────── */
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--primary);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Outer Layout ──────────────────────────── */
+    .page-wrapper {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .main-content {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .content-container {
+      max-width: 1280px;
+      width: 100%;
+      padding: 24px 16px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: row-reverse;
+      align-items: center;
+      justify-content: center;
+      gap: 48px;
+    }
+
+    /* ── Central Column (card + logo + illusts) ── */
+    .center-column {
+      position: relative;
+      max-width: 576px;
+      width: 100%;
+    }
+
+    /* ── Logo ───────────────────────────────────── */
+    .logo-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: fit-content;
+      margin: 0 auto 24px;
+      text-align: center;
+      text-decoration: none;
+      color: var(--primary);
+      gap: 8px;
+    }
+
+    .logo-area .logo-icon {
+      width: 56px;
+      height: 56px;
+      display: block;
+    }
+
+    .logo-area .logo-text {
+      display: block;
+      font-size: 1.6rem;
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+
+    /* ── Email Card ─────────────────────────────── */
+    .email-card {
+      position: relative;
+      z-index: 10;
+      background: var(--card-bg);
+      border: 1px solid var(--primary);
+      border-radius: 10px;
+      padding: 12px 24px;
+    }
+
+    /* ── Email Fields (To / Subject) ───────────── */
+    .email-field {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--primary);
+      font-size: 1rem;
+      color: var(--primary);
+    }
+
+    .email-field .field-label {
+      font-weight: 400;
+    }
+
+    .email-field .field-value {
+      font-weight: 700;
+    }
+
+    /* ── Card Body ─────────────────────────────── */
+    .card-body {
+      padding: 20px 0 8px;
+    }
+
+    .tldr-label {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 2px;
+    }
+
+    .tldr-text {
+      font-style: italic;
+      font-size: 1rem;
+      line-height: 1.5;
+      margin-bottom: 24px;
+    }
+
+    .card-body p {
+      font-size: 1rem;
+      line-height: 1.55;
+      margin-bottom: 16px;
+      font-weight: 400;
+    }
+
+    .card-divider {
+      width: 100%;
+      height: 1px;
+      background: var(--primary);
+      margin: 24px 0;
+      opacity: 0.25;
+    }
+
+    .card-body h2 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .card-body ol {
+      font-size: 1rem;
+      line-height: 1.6;
+      padding-left: 20px;
+      margin-bottom: 8px;
+    }
+
+    .card-body ol li {
+      margin-bottom: 8px;
+    }
+
+    /* ── Signup Form ──────────────────────────── */
+    .signup-area {
+      padding-top: 8px;
+    }
+
+    .signup-area .card-divider {
+      margin-bottom: 28px;
+    }
+
+    .form-wrapper {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .form-wrapper input[type="email"] {
+      flex: 1;
+      padding: 12px 16px;
+      border: 1px solid var(--primary);
+      border-radius: 4px;
+      background: #fff;
+      color: var(--primary);
+      font-family: inherit;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .form-wrapper input[type="email"]::placeholder {
+      color: var(--accent1);
+      opacity: 0.6;
+    }
+
+    .form-wrapper input[type="email"]:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(40, 81, 77, 0.15);
+    }
+
+    .form-wrapper button {
+      padding: 12px 24px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    .form-wrapper button:hover {
+      background: #1e3f3c;
+    }
+
+    .form-wrapper button:active {
+      transform: scale(0.98);
+    }
+
+    .form-note {
+      font-size: 0.82rem;
+      color: var(--accent1);
+      text-align: center;
+    }
+
+    .success-msg {
+      display: none;
+      text-align: center;
+      padding: 16px 0;
+      font-weight: 600;
+    }
+
+    .success-msg.active {
+      display: block;
+    }
+
+    /* ── Illustration Blocks ──────────────────── */
+    .illust-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 48px;
+      margin: 48px 0 0;
+      text-align: center;
+      font-weight: 700;
+      z-index: 0;
+    }
+
+    .illust-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .illust-block img {
+      width: 100%;
+      max-width: 200px;
+      height: auto;
+    }
+
+    .illust-label {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    /* ── Desktop: absolute positioned illustrations ── */
+    @media (min-width: 1024px) {
+      .illust-container {
+        margin: 0;
+        gap: 0;
+      }
+
+      .illust-block {
+        position: absolute;
+        z-index: 0;
+      }
+
+      .illust-block:nth-child(1) {
+        top: 100px;
+        left: -260px;
+      }
+
+      .illust-block:nth-child(2) {
+        top: 200px;
+        right: -200px;
+        text-align: right;
+      }
+
+      .illust-block:nth-child(3) {
+        bottom: 40px;
+        left: -210px;
+      }
+
+      .illust-block:nth-child(4) {
+        bottom: -80px;
+        right: -180px;
+        text-align: center;
+      }
+
+      .illust-block img {
+        max-width: 180px;
+      }
+    }
+
+    /* ── Footer ────────────────────────────────── */
+    .footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 32px;
+      font-size: 0.82rem;
+      color: var(--primary);
+    }
+
+    .footer a {
+      color: var(--primary);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .footer a:hover {
+      opacity: 0.7;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    /* ── Responsive ────────────────────────────── */
+    @media (max-width: 1023px) {
+      .content-container {
+        flex-direction: column;
+        padding: 24px 16px;
+      }
+
+      .center-column {
+        max-width: 540px;
+      }
+
+      .illust-container {
+        position: static;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 32px;
+      }
+
+      .illust-block {
+        position: static;
+      }
+
+      .illust-block img {
+        max-width: 140px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .email-card {
+        padding: 10px 16px;
+      }
+
+      .logo-area .logo-text {
+        font-size: 1.7rem;
+      }
+
+      .form-wrapper {
+        flex-direction: column;
+      }
+
+      .form-wrapper button {
+        width: 100%;
+      }
+
+      .footer {
+        flex-direction: column;
+        text-align: center;
+        gap: 8px;
+        padding: 16px 20px;
+      }
+
+      .illust-block img {
+        max-width: 110px;
+      }
+
+      .illust-container {
+        gap: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <div class="main-content">
+      <div class="content-container">
+        <div class="center-column">
+          <!-- ── Logo ────────────────────────────── -->
+          <a href="#" class="logo-area">
+            <svg class="logo-icon" viewBox="0 0 170.93 166.81" xmlns="http://www.w3.org/2000/svg">
+              <path fill="#28514D" d="M153.88,73.03c-14.46-6.31-29.34,3.5-30.63,4.37,1.78-.35,12.58-2.25,22.58,5.01,9.98,7.24,11.53,18.08,11.76,19.88-5.55-12.07-16.44-20.09-28.14-20.48-19.17-.64-29.27,19.55-30.8,22.61-1.5,3-2.66,6.24-3.46,9.62v-.22c0-3.99.71-7.94,2.18-11.64,1.3-3.28,2.84-6.66,4.69-10.09,5.82-10.81,8.38-10.55,10.53-17.44,4.25-13.6-1.93-26.76-13.34-50.22C94.49,14.64,89.78,6.44,85.79,0c-3.99,6.44-8.7,14.64-13.46,24.41-11.41,23.46-17.59,36.62-13.34,50.22,2.15,6.89,4.71,6.62,10.53,17.44,1.29,2.41,2.44,4.79,3.46,7.12.74,3.7,1.91,9.48,2.65,13.18v1.22c-.79-3.21-1.92-6.3-3.35-9.17-1.53-3.06-11.63-23.25-30.8-22.61-11.7.39-22.59,8.41-28.14,20.48.23-1.8,1.78-12.64,11.76-19.88,10-7.25,20.79-5.35,22.58-5.01-1.28-.88-16.17-10.69-30.63-4.37C1.93,79.63-1.71,99.04.67,111.93c1.91,10.32,7.82,17.27,10.95,20.44,3.28-12.39,8.59-17.06,12.66-19.08,8.69-4.31,17.3.74,23.02-4.53,4.06-3.74,4.15-10.2,3.71-14.72,1.21.56,3.33,1.64,5.63,3.44,7.19,5.64,11.8,15.06,12.85,24.54h-11.85v11.98h11.12c-.6,2.39-1.47,4.67-2.68,6.75-1.19,2.05-3.89,6.53-9.4,8.82-6.87,2.87-13.43.38-15.14-.33-2.32,5.85-4.64,11.71-6.96,17.56,3.95.03,18.46-.34,29.89-11.15,5.7-5.39,9.33-12.14,11.15-19.31-.03,4.81-.3,9.69-.84,14.65-.57,5.27-2.44,10.54-5.61,15.81h32.65c-3.29-5.27-5.21-10.54-5.78-15.81-.55-5.11-.83-10.14-.84-15.08,1.78,7.33,5.45,14.25,11.27,19.74,11.43,10.81,25.94,11.18,29.89,11.15-2.32-5.85-4.64-11.71-6.96-17.56-1.71.71-8.27,3.19-15.14.33-5.51-2.3-8.21-6.77-9.4-8.82-1.21-2.08-2.08-4.37-2.68-6.75h11.77v-11.98h-12.5c1.05-9.47,5.66-18.89,12.85-24.54,2.29-1.8,4.41-2.88,5.63-3.44-.44,4.52-.34,10.99,3.71,14.72,5.72,5.27,14.33.22,23.02,4.53,4.07,2.02,9.38,6.69,12.66,19.08,3.13-3.18,9.04-10.12,10.95-20.44,2.38-12.89-1.26-32.3-16.38-38.91ZM85.79,111.02c-1.59-11.8-1.9-24.13-2-36.03.05-12.04.41-24.06,2-36.03,1.59,11.97,1.94,23.99,2,36.03-.1,11.9-.4,24.23-2,36.03Z"/>
+            </svg>
+          </a>
+
+          <!-- ── Email Card ──────────────────────── -->
+          <section class="email-card">
+            <div class="email-field">
+              <span class="field-label">Para:</span>
+              <span class="field-value">Você</span>
+            </div>
+
+            <div class="email-field">
+              <span class="field-label">Assunto:</span>
+              <span class="field-value">Isso aqui não é sobre marketing.</span>
+            </div>
+
+            <div class="card-body">
+              <p>
+                Todo mundo no digital tá te vendendo a mesma coisa.
+              </p>
+
+              <p>
+                O guru de posicionamento quer que você compre o método dele.
+                O cara do tráfego quer que você compre o curso dele.
+                O mentor de "negócios escaláveis" quer que você compre a mentoria dele.
+              </p>
+
+              <p>
+                E todos eles abrem o email com "Olá, tudo bem?" e fecham com "ÚLTIMAS VAGAS".
+              </p>
+
+              <p>
+                Que loucura, né?
+              </p>
+
+              <div class="card-divider"></div>
+
+              <p>
+                Eu não tenho Rolex, não posto print de faturamento e não vou te ensinar "o segredo dos 7 dígitos".
+              </p>
+
+              <p>
+                O que eu faço aqui é simples: mando emails.
+              </p>
+
+              <p>
+                Sobre o que ninguém te conta de construir um negócio que funciona de verdade.
+                Sobre as decisões que você tá adiando.
+                Sobre o preço de ignorar o que realmente importa enquanto corre atrás do que não importa.
+              </p>
+
+              <p>
+                Não é conteúdo. É conversa.
+              </p>
+
+              <!-- ── Signup Form ────────── -->
+              <div class="signup-area">
+                <div class="card-divider"></div>
+
+                <div id="form-area">
+                  <div class="form-wrapper">
+                    <input type="email" id="email-input" placeholder="seu@email.com" required>
+                    <button onclick="handleSignup()">Quero receber</button>
+                  </div>
+                  <p class="form-note">Sem sequência de "sentimos sua falta". Se quiser sair, sai.</p>
+                </div>
+
+                <div class="success-msg" id="success-msg">
+                  Pronto. Verifique sua caixa de entrada.
+                </div>
+              </div>
+
+              <div class="card-divider"></div>
+              <p style="margin-bottom: 0;">— Kevin</p>
+            </div>
+          </section>
+
+          <!-- ── Illustrations (DrawKit Larry) ── -->
+          <div class="illust-container">
+
+            <div class="illust-block">
+              <img src="img/illust-noise.svg" alt="Pessoa cercada de notificações" loading="lazy">
+              <span class="illust-label">Todos gritando a mesma coisa.</span>
+            </div>
+
+            <div class="illust-block">
+              <img src="img/illust-overload.svg" alt="Pessoa sobrecarregada no computador" loading="lazy">
+              <span class="illust-label">Ruído demais, direção de menos.</span>
+            </div>
+
+            <div class="illust-block">
+              <img src="img/illust-stuck.svg" alt="Pessoa presa no tempo" loading="lazy">
+              <span class="illust-label">Preso no que não importa.</span>
+            </div>
+
+            <div class="illust-block">
+              <img src="img/illust-clarity.svg" alt="Pessoa com clareza e direção" loading="lazy">
+              <span class="illust-label">Clareza sobre o que importa.</span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Footer ──────────────────────────────── -->
+    <footer class="footer">
+      <span>&copy; 2026 Kevin. Todos os direitos reservados.</span>
+      <div class="footer-links">
+        <a href="#">FAQ</a>
+        <a href="#">Política de Privacidade</a>
+        <a href="#">Termos de Uso</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    function handleSignup() {
+      const emailInput = document.getElementById('email-input');
+      const email = emailInput.value.trim();
+      if (!email || !email.includes('@')) {
+        emailInput.style.borderColor = '#c0392b';
+        emailInput.focus();
+        setTimeout(() => {
+          emailInput.style.borderColor = '#28514D';
+        }, 2000);
+        return;
+      }
+
+      document.getElementById('form-area').style.display = 'none';
+      document.getElementById('success-msg').classList.add('active');
+
+      // TODO: Integrate with your email service (Mailchimp, ConvertKit, Brevo, etc.)
+      console.log('Lead captured:', email);
+    }
+
+    document.getElementById('email-input').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') handleSignup();
+    });
+  </script>
+</body>
+</html>
