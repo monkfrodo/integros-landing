@@ -449,8 +449,6 @@
                 Que loucura, né?
               </p>
 
-              <div class="card-divider"></div>
-
               <p>
                 Eu não tenho Rolex, não posto print de faturamento e não vou te ensinar "o segredo dos 7 dígitos".
               </p>
@@ -487,7 +485,8 @@
               </div>
 
               <div class="card-divider"></div>
-              <p style="margin-bottom: 0;">— Kevin</p>
+              <p style="margin-bottom: 2px;">— Kevin Eger.</p>
+              <p style="margin-bottom: 0; font-size: 0.9rem; font-style: italic; opacity: 0.8;">propósito, seriedade e integridade.</p>
             </div>
           </section>
 
@@ -531,9 +530,19 @@
   </div>
 
   <script>
-    function handleSignup() {
+    // ── ConvertKit (Kit) Configuration ─────────────────
+    // Para configurar:
+    // 1. Acesse https://app.kit.com/account/edit → copie sua API Key pública
+    // 2. Crie um formulário em Kit → Forms → pegue o Form ID na URL (ex: /forms/7654321/edit → ID é 7654321)
+    // 3. Substitua os valores abaixo:
+    const CONVERTKIT_API_KEY = 'ACToNRKxQcIk8S6Brww_QA';
+    const CONVERTKIT_FORM_ID = '9067445';
+
+    async function handleSignup() {
       const emailInput = document.getElementById('email-input');
+      const submitBtn = document.querySelector('.form-wrapper button');
       const email = emailInput.value.trim();
+
       if (!email || !email.includes('@')) {
         emailInput.style.borderColor = '#c0392b';
         emailInput.focus();
@@ -543,11 +552,39 @@
         return;
       }
 
-      document.getElementById('form-area').style.display = 'none';
-      document.getElementById('success-msg').classList.add('active');
+      // Disable form while submitting
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Enviando...';
+      emailInput.disabled = true;
 
-      // TODO: Integrate with your email service (Mailchimp, ConvertKit, Brevo, etc.)
-      console.log('Lead captured:', email);
+      try {
+        const response = await fetch(
+          `https://api.convertkit.com/v3/forms/${CONVERTKIT_FORM_ID}/subscribe`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json; charset=utf-8' },
+            body: JSON.stringify({
+              api_key: CONVERTKIT_API_KEY,
+              email: email,
+            }),
+          }
+        );
+
+        if (!response.ok) throw new Error('Erro ao cadastrar');
+
+        document.getElementById('form-area').style.display = 'none';
+        document.getElementById('success-msg').classList.add('active');
+      } catch (err) {
+        console.error('ConvertKit error:', err);
+        emailInput.style.borderColor = '#c0392b';
+        submitBtn.textContent = 'Tente novamente';
+        emailInput.disabled = false;
+        submitBtn.disabled = false;
+        setTimeout(() => {
+          submitBtn.textContent = 'Quero receber';
+          emailInput.style.borderColor = '#28514D';
+        }, 3000);
+      }
     }
 
     document.getElementById('email-input').addEventListener('keypress', (e) => {
