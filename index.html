@@ -572,8 +572,7 @@
 
         if (!response.ok) throw new Error('Erro ao cadastrar');
 
-        document.getElementById('form-area').style.display = 'none';
-        document.getElementById('success-msg').classList.add('active');
+        window.location.href = '/confirmacao';
       } catch (err) {
         console.error('ConvertKit error:', err);
         emailInput.style.borderColor = '#c0392b';
